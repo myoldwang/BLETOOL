@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            BLE TOOL
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <p *ngIf="isConnect" class="output">{{device_name}}</p>
+    <p *ngIf="isOutput" class="output">{{output}}</p>
+    <ion-fab top right #fab (click)="order(fab_test)">
+        <button ion-fab mini>指令</button>
+        <ion-fab-list side="bottom">
+            <button ion-fab (click)="send_vibration(fab)">震动</button>
+            <button ion-fab (click)="send_step(fab)">计步</button>
+            <button ion-fab (click)="send_history(fab)">历史</button>
+            <button ion-fab (click)="send_battery(fab)">电量</button>
+            <button ion-fab (click)="send_version(fab)">版本</button>
+            <button ion-fab (click)="self_set(fab)">自定义</button>
+        </ion-fab-list>
+    </ion-fab>
+    <ion-fab right bottom #fab_test (click)="test(fab)">
+        <button ion-fab mini>测试</button>
+        <ion-fab-list side="top">
+            <button ion-fab (click)="restart(fab_test)">重启</button>
+            <button ion-fab (click)="restart_times(fab_test)">rcount</button>
+            <button ion-fab (click)="init(fab_test)">初始化</button>
+            <button ion-fab (click)="system_time(fab_test)">time</button>
+        </ion-fab-list>
+    </ion-fab>
+    <div>
+        <button ion-button (click)="start_scan()" small>开始搜索</button>
+        <button small ion-button class="disconnect" (click)="disconnect()" *ngIf="isConnect">断开当前连接</button>
+    </div>
+    <div *ngFor="let item of device_list;let i = index" class="bor" padding-left>
+        <p>name:{{item.name}}</p>
+        <p>id:{{item.id}}</p>
+        <p>rssi:{{item.rssi}}
+            <img src="assets/img/icon_signal_0@2x.png" #rssi_img [name]="item.rssi" width="30" height="21" float-right margin-right  />
+        </p>
+        <button ion-button small (click)="connect($event)" [id]="item.id" [name]="item.name">我要连接</button>
+    </div>
+</ion-content>
+
+
+
